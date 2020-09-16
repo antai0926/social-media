@@ -1,21 +1,34 @@
 import React from 'react';
 import './App.css';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import home from './pages/Home';
-import signup from './pages/Signup';
-import login from './pages/Login';
+import { ThemeProvider } from '@material-ui/core/styles';
+import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
+import themeObject from './util/theme';
+
+//Component
+import NavBar from './component/NavBar.jsx';
+
+//Pages
+import Home from './pages/Home';
+import Signup from './pages/Signup';
+import Login from './pages/Login';
+
+const theme = createMuiTheme(themeObject);
 
 function App() {
   return (
-    <div className="App">
+    <ThemeProvider theme={theme}>
       <BrowserRouter>
-        <Switch>
-          <Route paht="/" component={home} />
-          <Route paht="/login" component={login} />
-          <Route paht="/signup" component={signup} />
-        </Switch>
+        <NavBar />
+        <div className="container">
+          <Switch>
+            <Route exact path="/" component={Home} />
+            <Route exact path="/login" component={Login} />
+            <Route exact path="/signup" component={Signup} />
+          </Switch>
+        </div>
       </BrowserRouter>
-    </div>
+    </ThemeProvider>
   );
 }
 
