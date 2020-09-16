@@ -1,4 +1,4 @@
-import { createStore, applyMiddleware, combineReducers } from 'redux';
+import { createStore, applyMiddleware, combineReducers, compose } from 'redux';
 import logger from 'redux-logger';
 import thunk from 'redux-thunk';
 
@@ -18,5 +18,11 @@ const reducers = combineReducers({
   UI: uiReducer,
 });
 
-const store = createStore(reducers, applyMiddleware(...middlewares));
+const composeEnhancers =
+  typeof window === 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+    ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
+    : compose;
+
+const enhancer = composeEnhancers(applyMiddleware(...middlewares));
+const store = createStore(reducers, enhancer);
 export default store;
