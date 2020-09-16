@@ -2,11 +2,14 @@ import React, { useState } from 'react';
 import Prototypes from 'prop-types';
 
 //Third Party
-import axios from 'axios';
 import { Link } from 'react-router-dom';
 
 //component
 import AppIcon from '../images/icon.png';
+
+//Redux
+import { useSelector, useDispatch } from 'react-redux';
+import { loginUser } from '../redux/actions/userAction';
 
 //MUI
 import withStyles from '@material-ui/core/styles/withStyles';
@@ -23,24 +26,14 @@ const styles = (theme) => ({
 const Login = (props) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [errors, setErrors] = useState({});
+
+  const dispatch = useDispatch();
+  const { loading, errors } = useSelector((state) => state.UI);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log('submit');
-    setLoading(true);
     const userData = { email, password };
-    try {
-      const result = await axios.post('/login', userData);
-      console.log(result.data);
-      setLoading(false);
-      props.history.push('/');
-    } catch (err) {
-      console.error(err.response.data);
-      setErrors(err.response.data);
-      setLoading(false);
-    }
+    dispatch(loginUser(userData, props.history));
   };
 
   const { classes } = props;

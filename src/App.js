@@ -9,6 +9,8 @@ import themeObject from './util/theme';
 //ThirdParty
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import jwtDecode from 'jwt-decode';
+import { Provider } from 'react-redux';
+import store from './redux/store';
 
 //Component
 import NavBar from './component/NavBar.jsx';
@@ -23,9 +25,9 @@ const token = localStorage.FBIdToken;
 let authenticated = false;
 if (token) {
   const decodedToken = jwtDecode(token);
-  console.log(decodedToken);
   if (decodedToken.exp * 1000 < Date.now()) {
-    window.location.href = '/login';
+    // window.location.href = '/login';
+    alert('您的登入時間已超過，請重新登入');
     authenticated = false;
   } else {
     authenticated = true;
@@ -35,26 +37,28 @@ if (token) {
 function App() {
   return (
     <ThemeProvider theme={theme}>
-      <BrowserRouter>
-        <NavBar />
-        <div className="container">
-          <Switch>
-            <Route exact path="/" component={Home} />
-            <AuthRoute
-              exact
-              path="/login"
-              component={Login}
-              authenticated={authenticated}
-            />
-            <AuthRoute
-              exact
-              path="/signup"
-              component={Signup}
-              authenticated={authenticated}
-            />
-          </Switch>
-        </div>
-      </BrowserRouter>
+      <Provider store={store}>
+        <BrowserRouter>
+          <NavBar />
+          <div className="container">
+            <Switch>
+              <Route exact path="/" component={Home} />
+              <AuthRoute
+                exact
+                path="/login"
+                component={Login}
+                authenticated={authenticated}
+              />
+              <AuthRoute
+                exact
+                path="/signup"
+                component={Signup}
+                authenticated={authenticated}
+              />
+            </Switch>
+          </div>
+        </BrowserRouter>
+      </Provider>
     </ThemeProvider>
   );
 }
