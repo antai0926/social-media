@@ -2,7 +2,7 @@ import axios from 'axios';
 
 import TYPES from '../types';
 
-const { SET_USER, SET_UNAUTHENTICATED } = TYPES.USER;
+const { SET_USER, SET_UNAUTHENTICATED, LOADING_USER } = TYPES.USER;
 const { LOADING_UI, CLEAR_ERRORS, SET_ERRORS } = TYPES.UI;
 
 const setAuthorizationHeader = (token) => {
@@ -47,6 +47,11 @@ export const logoutUser = () => (dispatch) => {
 };
 
 export const getUserData = () => async (dispatch) => {
-  const res = await axios.get('/user');
-  dispatch({ type: SET_USER, payload: res.data });
+  try {
+    dispatch({ type: LOADING_USER });
+    const res = await axios.get('/user');
+    dispatch({ type: SET_USER, payload: res.data });
+  } catch (err) {
+    console.error(err);
+  }
 };

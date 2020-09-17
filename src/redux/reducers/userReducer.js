@@ -1,9 +1,15 @@
 import TYPES from '../types';
 
-const { SET_USER, SET_AUTHENTICATED, SET_UNAUTHENTICATED } = TYPES.USER;
+const {
+  SET_USER,
+  SET_AUTHENTICATED,
+  SET_UNAUTHENTICATED,
+  LOADING_USER,
+} = TYPES.USER;
 
 const INITIAL_STATE = {
   authenticated: false,
+  loading: false,
   credentials: {},
   likes: [],
   notifications: [],
@@ -20,8 +26,14 @@ const userReducer = (state = INITIAL_STATE, action) => {
       return INITIAL_STATE;
     case SET_USER:
       return {
-        autenticated: true,
+        authenticated: true,
+        loading: false,
         ...action.payload,
+      };
+    case LOADING_USER:
+      return {
+        ...state,
+        loading: true,
       };
     default:
       return state;
