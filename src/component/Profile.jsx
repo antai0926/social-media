@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
 
@@ -12,9 +12,14 @@ import Paper from '@material-ui/core/Paper';
 import LocationOn from '@material-ui/icons/LocationOn';
 import LinkIcon from '@material-ui/icons/Link';
 import CalendarToday from '@material-ui/icons/CalendarToday';
+import EditIcon from '@material-ui/icons/Edit';
 
 //Redux
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+
+//Component
+import MyButton from '../util/MyButton';
+import { uploadImage } from '../redux/actions/userAction';
 
 const styles = (theme) => ({
   paper: {
@@ -65,6 +70,7 @@ const styles = (theme) => ({
 });
 
 const Profile = (props) => {
+  const dispatch = useDispatch();
   const {
     credentials: { handle, createdAt, imageUrl, bio, website, location },
     loading,
@@ -72,7 +78,18 @@ const Profile = (props) => {
   } = useSelector((state) => state.user);
   const { classes } = props;
 
-  console.log('authenticated', authenticated);
+  const imgInputRef = useRef(null);
+
+  const handleImageChange = (event) => {
+    const image = event.target.files[0];
+    const formData = new FormData();
+    formData.append('image', image, image.name);
+    dispatch(uploadImage(formData));
+  };
+
+  const handleEditPicture = (event) => {
+    imgInputRef.current.click();
+  };
 
   const AutenticatedView = () => {
     return (
@@ -80,6 +97,20 @@ const Profile = (props) => {
         <div className={classes.profile}>
           <div className="image-wrapper">
             <img src={imageUrl} alt="profile" className="profile-image" />
+            <input
+              ref={imgInputRef}
+              type="file"
+              id="ImageInput"
+              hidden="hidden"
+              onChange={handleImageChange}
+            />
+            <MyButton
+              tip="Edit profile picture"
+              onClick={handleEditPicture}
+              btnClassName="button"
+            >
+              <EditIcon color="primary" />
+            </MyButton>
           </div>
           <hr />
           <div className="profile-details">
