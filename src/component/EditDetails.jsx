@@ -16,9 +16,6 @@ import { useDispatch, useSelector } from 'react-redux';
 
 const styles = (theme) => ({
   ...theme.custom,
-  button: {
-    // float: 'right',
-  },
 });
 
 const EditDetails = ({ classes }) => {

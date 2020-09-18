@@ -8,6 +8,7 @@ import Button from '@material-ui/core/Button';
 import MuiLink from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
+import Grid from '@material-ui/core/Grid';
 
 import LocationOn from '@material-ui/icons/LocationOn';
 import LinkIcon from '@material-ui/icons/Link';
@@ -145,7 +146,11 @@ const Profile = (props) => {
             <CalendarToday color="primary" />{' '}
             <span>Joined {dayjs(createdAt).format('MMM YYYY')}</span>
           </div>
-          <EditDetails />
+          <Grid container justify="flex-end">
+            <Grid item>
+              <EditDetails />
+            </Grid>
+          </Grid>
         </div>
       </Paper>
     );
