@@ -1,26 +1,21 @@
-import React, { useEffect, useState } from 'react';
-//Third Part
-import axios from 'axios';
+import React, { useEffect } from 'react';
 //MUI
 import Grid from '@material-ui/core/Grid';
 //Component
 import Scream from '../component/Scream';
 import Profile from '../component/Profile';
+import { getScreams } from '../redux/actions/dataAction';
+//Redux
+import { useDispatch, useSelector } from 'react-redux';
 
 const Home = () => {
-  const [screams, setScreams] = useState([]);
-  useEffect(() => {
-    const fetchScream = async () => {
-      try {
-        const res = await axios.get('/screams');
-        setScreams(res.data);
-      } catch (err) {
-        console.error(err);
-      }
-    };
-    fetchScream();
-  }, []);
+  const dispatch = useDispatch();
 
+  useEffect(() => {
+    dispatch(getScreams());
+  }, [dispatch]);
+
+  const screams = useSelector((state) => state.data.screams);
   const recentScreamMarkup = screams ? (
     screams.map((scream) => <Scream key={scream.screamId} scream={scream} />)
   ) : (

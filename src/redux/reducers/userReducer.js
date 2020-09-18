@@ -7,6 +7,8 @@ const {
   LOADING_USER,
 } = TYPES.USER;
 
+const { LIKE_SCREAM, UNLIKE_SCREAM } = TYPES.DATA;
+
 const INITIAL_STATE = {
   authenticated: false,
   loading: false,
@@ -34,6 +36,24 @@ const userReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         loading: true,
+      };
+    case LIKE_SCREAM:
+      return {
+        ...state,
+        likes: [
+          ...state.likes,
+          {
+            userHandle: state.credentials.handle,
+            screamId: action.payload.screamId,
+          },
+        ],
+      };
+    case UNLIKE_SCREAM:
+      return {
+        ...state,
+        likes: state.likes.filter((like) => {
+          return like.screamId !== action.payload.screamId;
+        }),
       };
     default:
       return state;

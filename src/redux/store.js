@@ -14,7 +14,7 @@ if (process.env.NODE_ENV === 'development') {
 
 const reducers = combineReducers({
   user: userReducer,
-  // data: dataReducer,
+  data: dataReducer,
   UI: uiReducer,
 });
 
