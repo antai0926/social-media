@@ -17,7 +17,7 @@ import { useDispatch, useSelector } from 'react-redux';
 const styles = (theme) => ({
   ...theme.custom,
   button: {
-    float: 'right',
+    // float: 'right',
   },
 });
 
@@ -32,8 +32,6 @@ const EditDetails = ({ classes }) => {
     credentials.location ? credentials.location : ''
   );
   const [open, setOpen] = useState(false);
-
-  // useEffect(() => {}, []);
 
   const mapUserDetailsToState = (credentials) => {
     setBio(credentials.bio ? credentials.bio : '');

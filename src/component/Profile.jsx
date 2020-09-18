@@ -13,14 +13,13 @@ import LocationOn from '@material-ui/icons/LocationOn';
 import LinkIcon from '@material-ui/icons/Link';
 import CalendarToday from '@material-ui/icons/CalendarToday';
 import AddPhotoAlternateIcon from '@material-ui/icons/AddPhotoAlternate';
-import MeetingRoomIcon from '@material-ui/icons/MeetingRoom';
 
 //Redux
 import { useDispatch, useSelector } from 'react-redux';
 
 //Component
 import MyButton from '../util/MyButton';
-import { uploadImage, logoutUser } from '../redux/actions/userAction';
+import { uploadImage } from '../redux/actions/userAction';
 import EditDetails from '../component/EditDetails';
 
 const styles = (theme) => ({
@@ -93,9 +92,6 @@ const Profile = (props) => {
     imgInputRef.current.click();
   };
 
-  const handleLogout = () => {
-    dispatch(logoutUser());
-  };
   const AutenticatedView = () => {
     return (
       <Paper className={classes.paper}>
@@ -149,9 +145,6 @@ const Profile = (props) => {
             <CalendarToday color="primary" />{' '}
             <span>Joined {dayjs(createdAt).format('MMM YYYY')}</span>
           </div>
-          <MyButton tip="Logout" onClick={handleLogout}>
-            <MeetingRoomIcon color="primary" />
-          </MyButton>
           <EditDetails />
         </div>
       </Paper>

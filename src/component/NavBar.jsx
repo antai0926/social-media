@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 //MUI
 import AppBar from '@material-ui/core/AppBar';
@@ -9,14 +9,20 @@ import Button from '@material-ui/core/Button';
 import HomeIcon from '@material-ui/icons/Home';
 import AddIcon from '@material-ui/icons/Add';
 import Notifications from '@material-ui/icons/Notifications';
+import MeetingRoomIcon from '@material-ui/icons/MeetingRoom';
 
 //component
 import MyButton from '../util/MyButton';
+import { logoutUser } from '../redux/actions/userAction';
 
 const NavBar = () => {
   const authenticated = useSelector((state) => state.user.authenticated);
 
   const AuthenticatedView = () => {
+    const dispatch = useDispatch();
+    const handleLogout = () => {
+      dispatch(logoutUser());
+    };
     return (
       <React.Fragment>
         <MyButton tip="Post a Scream!">
@@ -27,6 +33,9 @@ const NavBar = () => {
         </MyButton>
         <MyButton tip="Notifications">
           <Notifications color="primary" />
+        </MyButton>
+        <MyButton tip="Logout" onClick={handleLogout}>
+          <MeetingRoomIcon color="primary" />
         </MyButton>
       </React.Fragment>
     );
