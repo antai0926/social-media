@@ -30,6 +30,18 @@ export const getScreams = () => async (dispatch) => {
     dispatch({ type: SET_SCREAMS, payload: [] });
   }
 };
+/**Post a Scream */
+export const postScream = (newScream) => async (dispatch) => {
+  dispatch({ type: LOADING_UI });
+  try {
+    const res = await axios.post('/scream', newScream);
+    dispatch({ type: POST_SCREAM, payload: res.data });
+    dispatch({ type: CLEAR_ERRORS });
+  } catch (err) {
+    console.error(err.response.data);
+    dispatch({ type: SET_ERRORS, payload: err.response.data });
+  }
+};
 
 /**Like Scream */
 export const likeScream = (screamId) => async (dispatch) => {
@@ -49,7 +61,7 @@ export const unlikeScream = (screamId) => async (dispatch) => {
     console.error(err);
   }
 };
-
+/**Delete Scream */
 export const deleteScream = (screamId) => async (dispatch) => {
   try {
     await axios.delete(`/scream/${screamId}`);
@@ -57,4 +69,8 @@ export const deleteScream = (screamId) => async (dispatch) => {
   } catch (err) {
     console.error(err);
   }
+};
+/**Clear Errors */
+export const clearErrors = () => (dispatch) => {
+  dispatch({ type: CLEAR_ERRORS });
 };

@@ -59,6 +59,11 @@ const dataReducer = (state = INITIAL_STATE, action) => {
         ...state,
         screams: [...state.screams],
       };
+    case POST_SCREAM:
+      return {
+        ...state,
+        screams: [action.payload, ...state.screams],
+      };
     default:
       return state;
   }

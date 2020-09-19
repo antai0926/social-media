@@ -7,13 +7,14 @@ import AppBar from '@material-ui/core/AppBar';
 import ToolBar from '@material-ui/core/ToolBar';
 import Button from '@material-ui/core/Button';
 import HomeIcon from '@material-ui/icons/Home';
-import AddIcon from '@material-ui/icons/Add';
+
 import Notifications from '@material-ui/icons/Notifications';
 import MeetingRoomIcon from '@material-ui/icons/MeetingRoom';
 
 //component
 import MyButton from '../util/MyButton';
 import { logoutUser } from '../redux/actions/userAction';
+import PostScream from './PostScream';
 
 const NavBar = () => {
   const authenticated = useSelector((state) => state.user.authenticated);
@@ -25,9 +26,7 @@ const NavBar = () => {
     };
     return (
       <React.Fragment>
-        <MyButton tip="Post a Scream!">
-          <AddIcon color="primary" />
-        </MyButton>
+        <PostScream />
         <MyButton tip="Home">
           <HomeIcon color="primary" />
         </MyButton>
