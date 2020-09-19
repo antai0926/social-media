@@ -50,6 +50,10 @@ const dataReducer = (state = INITIAL_STATE, action) => {
         (scream) => scream.screamId === action.payload.screamId
       );
       state.screams[index] = action.payload;
+      //當打開screamDialog時click like or unlike update scream state
+      if (state.scream.screamId === action.payload.screamId) {
+        state.scream = action.payload;
+      }
       return {
         ...state,
         screams: [...state.screams],

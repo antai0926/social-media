@@ -1,6 +1,6 @@
 import React, { Fragment, useState } from 'react';
 import MyButton from '../util/MyButton';
-// import LikeButton from './LikeButton';
+import LikeButton from './LikeButton';
 // import Comments from './Comments';
 // import CommentForm from './CommentForm';
 import dayjs from 'dayjs';
@@ -54,10 +54,9 @@ const ScreamDialog = (props) => {
   const [open, setOpen] = useState(false);
   const [oldPath, setOldPath] = useState('');
   const [newPath, setNewPath] = useState('');
-  const { classes } = props;
+  const { classes, screamId } = props;
 
   const {
-    screamId,
     body,
     createdAt,
     likeCount,
@@ -73,7 +72,7 @@ const ScreamDialog = (props) => {
 
   const handleOpen = () => {
     setOpen(true);
-    dispatch(getScream(props.screamId));
+    dispatch(getScream(screamId));
   };
 
   const handleClose = () => {
@@ -108,6 +107,12 @@ const ScreamDialog = (props) => {
           </Typography>
           <hr className={classes.invisibleSeparator} />
           <Typography variant="body1">{body}</Typography>
+          <LikeButton screamId={screamId} />
+          <span>{likeCount} likes</span>
+          <MyButton tip="comments">
+            <ChatIcon color="primary" />
+          </MyButton>
+          <span>{commentCount} comments</span>
         </Grid>
       </Grid>
     );
