@@ -49,3 +49,12 @@ export const unlikeScream = (screamId) => async (dispatch) => {
     console.error(err);
   }
 };
+
+export const deleteScream = (screamId) => async (dispatch) => {
+  try {
+    await axios.delete(`/scream/${screamId}`);
+    dispatch({ type: DELETE_SCREAM, payload: screamId });
+  } catch (err) {
+    console.error(err);
+  }
+};

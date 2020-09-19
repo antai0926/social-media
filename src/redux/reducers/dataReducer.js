@@ -25,6 +25,7 @@ const INITIAL_STATE = {
 };
 
 const dataReducer = (state = INITIAL_STATE, action) => {
+  let index;
   switch (action.type) {
     case LOADING_DATA:
       return {
@@ -40,17 +41,24 @@ const dataReducer = (state = INITIAL_STATE, action) => {
     case LIKE_SCREAM:
     case UNLIKE_SCREAM:
       //找出screams中like該筆scream的index並將回傳的新的scream更新回screams
-      const newScreams = state.screams.map((scream) => {
-        if (scream.screamId === action.payload.screamId) {
-          return action.payload;
-        }
-        return scream;
-      });
+      index = state.screams.findIndex(
+        (scream) => scream.screamId === action.payload.screamId
+      );
+      state.screams[index] = action.payload;
       return {
         ...state,
-        screams: newScreams,
+        screams: [...state.screams],
       };
 
+    case DELETE_SCREAM:
+      index = state.screams.findIndex(
+        (scream) => scream.screamId === action.payload
+      );
+      state.screams.splice(index, 1);
+      return {
+        ...state,
+        screams: [...state.screams],
+      };
     default:
       return state;
   }

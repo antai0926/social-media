@@ -8,6 +8,7 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 
 //Compenent
 import MyButton from '../util/MyButton';
+import DeleteScream from './DeleteScream';
 
 //MUI
 import withStyles from '@material-ui/core/styles/withStyles';
@@ -22,6 +23,7 @@ import { likeScream, unlikeScream } from '../redux/actions/dataAction';
 
 const styles = {
   card: {
+    position: 'relative',
     display: 'flex',
     marginBottom: 20,
   },
@@ -37,7 +39,15 @@ const styles = {
 const Scream = (props) => {
   const {
     classes,
-    scream: { body, createdAt, userImage, userHandle, likeCount, commentCount },
+    scream: {
+      body,
+      createdAt,
+      userImage,
+      userHandle,
+      likeCount,
+      commentCount,
+      screamId,
+    },
   } = props;
 
   const user = useSelector((state) => state.user);
@@ -48,10 +58,7 @@ const Scream = (props) => {
   } = user;
 
   const likedScream = () => {
-    if (
-      user.likes &&
-      user.likes.find((like) => like.screamId === props.scream.screamId)
-    ) {
+    if (user.likes && user.likes.find((like) => like.screamId === screamId)) {
       return true;
     }
     return false;
@@ -72,21 +79,24 @@ const Scream = (props) => {
       return (
         <MyButton
           tip="Undo Like"
-          onClick={() => dispatch(unlikeScream(props.scream.screamId))}
+          onClick={() => dispatch(unlikeScream(screamId))}
         >
           <FavoriteIcon color="primary"></FavoriteIcon>
         </MyButton>
       );
-    } else {
-      return (
-        <MyButton
-          tip="Like"
-          onClick={() => dispatch(likeScream(props.scream.screamId))}
-        >
-          <FavoriteBorder color="primary"></FavoriteBorder>
-        </MyButton>
-      );
     }
+    return (
+      <MyButton tip="Like" onClick={() => dispatch(likeScream(screamId))}>
+        <FavoriteBorder color="primary"></FavoriteBorder>
+      </MyButton>
+    );
+  };
+
+  const DeleteButton = () => {
+    if (authenticated && userHandle === handle) {
+      return <DeleteScream screamId={screamId} />;
+    }
+    return null;
   };
 
   dayjs.extend(relativeTime);
@@ -106,6 +116,7 @@ const Scream = (props) => {
         >
           {userHandle}
         </Typography>
+        <DeleteButton />
         <Typography variant="body2" color="textSecondary">
           {dayjs(createdAt).fromNow()}
         </Typography>
