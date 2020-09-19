@@ -30,6 +30,17 @@ export const getScreams = () => async (dispatch) => {
     dispatch({ type: SET_SCREAMS, payload: [] });
   }
 };
+/**Get a scream */
+export const getScream = (screamId) => async (dispatch) => {
+  dispatch({ type: LOADING_UI });
+  try {
+    const res = await axios.get(`/scream/${screamId}`);
+    dispatch({ type: SET_SCREAM, payload: res.data });
+    dispatch({ type: STOP_LOADING_UI });
+  } catch (err) {
+    console.error(err);
+  }
+};
 /**Post a Scream */
 export const postScream = (newScream) => async (dispatch) => {
   dispatch({ type: LOADING_UI });

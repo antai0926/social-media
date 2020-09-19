@@ -1,5 +1,4 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 
 //Third-Party
 import { Link } from 'react-router-dom';
@@ -9,6 +8,7 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 //Compenent
 import MyButton from '../util/MyButton';
 import DeleteScream from './DeleteScream';
+import ScreamDialog from './ScreamDialog';
 
 //MUI
 import withStyles from '@material-ui/core/styles/withStyles';
@@ -19,7 +19,9 @@ import Typography from '@material-ui/core/Typography';
 import ChatIcon from '@material-ui/icons/Chat';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import FavoriteBorder from '@material-ui/icons/FavoriteBorder';
+//Redux
 import { likeScream, unlikeScream } from '../redux/actions/dataAction';
+import { useDispatch, useSelector } from 'react-redux';
 
 const styles = {
   card: {
@@ -127,6 +129,7 @@ const Scream = (props) => {
           <ChatIcon color="primary" />
         </MyButton>
         <span>{commentCount} comments</span>
+        <ScreamDialog screamId={screamId} userHandle={userHandle} />
       </CardContent>
     </Card>
   );

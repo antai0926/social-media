@@ -1,6 +1,6 @@
 import TYPES from '../types';
 
-const { LOADING_UI, CLEAR_ERRORS, SET_ERRORS } = TYPES.UI;
+const { LOADING_UI, CLEAR_ERRORS, SET_ERRORS, STOP_LOADING_UI } = TYPES.UI;
 const INITAIL_STATE = {
   loading: false,
   errors: {},
@@ -24,6 +24,11 @@ const uiReducer = (state = INITAIL_STATE, action) => {
       return {
         ...state,
         loading: true,
+      };
+    case STOP_LOADING_UI:
+      return {
+        ...state,
+        loading: false,
       };
     default:
       return state;

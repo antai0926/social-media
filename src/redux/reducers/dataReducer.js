@@ -38,6 +38,11 @@ const dataReducer = (state = INITIAL_STATE, action) => {
         screams: action.payload,
         loading: false,
       };
+    case SET_SCREAM:
+      return {
+        ...state,
+        scream: action.payload,
+      };
     case LIKE_SCREAM:
     case UNLIKE_SCREAM:
       //找出screams中like該筆scream的index並將回傳的新的scream更新回screams
