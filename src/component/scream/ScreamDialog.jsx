@@ -2,7 +2,7 @@ import React, { Fragment, useState } from 'react';
 import MyButton from '../../util/MyButton';
 import LikeButton from './LikeButton';
 import Comments from './Comments';
-// import CommentForm from './CommentForm';
+import CommentForm from './CommentForm';
 import dayjs from 'dayjs';
 import { Link } from 'react-router-dom';
 // MUI Stuff
@@ -74,6 +74,7 @@ const ScreamDialog = (props) => {
 
   const handleClose = () => {
     setOpen(false);
+    dispatch(clearErrors());
   };
 
   const DialogMarkup = () => {
@@ -112,6 +113,7 @@ const ScreamDialog = (props) => {
           <span>{commentCount} comments</span>
         </Grid>
         <hr className={classes.visibleSeparator} />
+        <CommentForm screamId={screamId} />
         <Comments comments={comments} />
       </Grid>
     );

@@ -47,7 +47,7 @@ export const postScream = (newScream) => async (dispatch) => {
   try {
     const res = await axios.post('/scream', newScream);
     dispatch({ type: POST_SCREAM, payload: res.data });
-    dispatch({ type: CLEAR_ERRORS });
+    dispatch(clearErrors());
   } catch (err) {
     console.error(err.response.data);
     dispatch({ type: SET_ERRORS, payload: err.response.data });
@@ -84,4 +84,16 @@ export const deleteScream = (screamId) => async (dispatch) => {
 /**Clear Errors */
 export const clearErrors = () => (dispatch) => {
   dispatch({ type: CLEAR_ERRORS });
+};
+
+/**Submit a comment */
+export const submitComment = (screamId, commentData) => async (dispatch) => {
+  try {
+    const res = await axios.post(`/scream/${screamId}/comment`, commentData);
+    dispatch({ type: SUBMIT_COMMENT, payload: res.data });
+    dispatch(clearErrors());
+  } catch (err) {
+    dispatch({ type: SET_ERRORS, payload: err.response.data });
+    console.error(err.response.data);
+  }
 };
