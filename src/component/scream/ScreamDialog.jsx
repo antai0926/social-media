@@ -1,7 +1,7 @@
 import React, { Fragment, useState } from 'react';
 import MyButton from '../../util/MyButton';
 import LikeButton from './LikeButton';
-// import Comments from './Comments';
+import Comments from './Comments';
 // import CommentForm from './CommentForm';
 import dayjs from 'dayjs';
 import { Link } from 'react-router-dom';
@@ -22,10 +22,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 const styles = (theme) => ({
   ...theme.custom,
-  invisibleSeparator: {
-    border: 'none',
-    margin: 4,
-  },
+
   profileImage: {
     maxWidth: 200,
     height: 200,
@@ -114,6 +111,8 @@ const ScreamDialog = (props) => {
           </MyButton>
           <span>{commentCount} comments</span>
         </Grid>
+        <hr className={classes.visibleSeparator} />
+        <Comments comments={comments} />
       </Grid>
     );
   };
