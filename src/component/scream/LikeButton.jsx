@@ -1,12 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 //Compenent
-import MyButton from '../util/MyButton';
+import MyButton from '../../util/MyButton';
 //MUI
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import FavoriteBorder from '@material-ui/icons/FavoriteBorder';
 //Redux
-import { likeScream, unlikeScream } from '../redux/actions/dataAction';
+import { likeScream, unlikeScream } from '../../redux/actions/dataAction';
 import { useSelector, useDispatch } from 'react-redux';
 
 const LikeButton = ({ screamId }) => {

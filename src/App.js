@@ -10,7 +10,7 @@ import themeObject from './util/theme';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 //Component
-import NavBar from './component/NavBar.jsx';
+import NavBar from './component/layout/NavBar.jsx';
 import Home from './pages/Home';
 import Signup from './pages/Signup';
 import Login from './pages/Login';

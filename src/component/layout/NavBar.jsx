@@ -12,9 +12,9 @@ import Notifications from '@material-ui/icons/Notifications';
 import MeetingRoomIcon from '@material-ui/icons/MeetingRoom';
 
 //component
-import MyButton from '../util/MyButton';
-import { logoutUser } from '../redux/actions/userAction';
-import PostScream from './PostScream';
+import MyButton from '../../util/MyButton';
+import { logoutUser } from '../../redux/actions/userAction';
+import PostScream from '../scream/PostScream';
 
 const NavBar = () => {
   const authenticated = useSelector((state) => state.user.authenticated);

@@ -1,5 +1,5 @@
 import React, { Fragment, useState } from 'react';
-import MyButton from '../util/MyButton';
+import MyButton from '../../util/MyButton';
 import LikeButton from './LikeButton';
 // import Comments from './Comments';
 // import CommentForm from './CommentForm';
@@ -17,7 +17,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import UnfoldMore from '@material-ui/icons/UnfoldMore';
 import ChatIcon from '@material-ui/icons/Chat';
 // Redux stuff
-import { getScream, clearErrors } from '../redux/actions/dataAction';
+import { getScream, clearErrors } from '../../redux/actions/dataAction';
 import { useDispatch, useSelector } from 'react-redux';
 
 const styles = (theme) => ({

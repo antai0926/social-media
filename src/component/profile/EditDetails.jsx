@@ -1,7 +1,7 @@
 import React, { Fragment, useState } from 'react';
-import MyButton from '../util/MyButton';
+import MyButton from '../../util/MyButton';
 // Redux stuff
-import { editUserDetails } from '../redux/actions/userAction';
+import { editUserDetails } from '../../redux/actions/userAction';
 // MUI Stuff
 import withStyles from '@material-ui/core/styles/withStyles';
 import Button from '@material-ui/core/Button';

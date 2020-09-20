@@ -2,8 +2,8 @@ import React, { useEffect } from 'react';
 //MUI
 import Grid from '@material-ui/core/Grid';
 //Component
-import Scream from '../component/Scream';
-import Profile from '../component/Profile';
+import Scream from '../component/scream/Scream';
+import Profile from '../component/profile/Profile';
 import { getScreams } from '../redux/actions/dataAction';
 //Redux
 import { useDispatch, useSelector } from 'react-redux';

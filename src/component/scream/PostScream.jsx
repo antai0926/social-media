@@ -1,6 +1,6 @@
 import React, { Fragment, useState, useEffect, useCallback } from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
-import MyButton from '../util/MyButton';
+import MyButton from '../../util/MyButton';
 // MUI Stuff
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
@@ -12,7 +12,7 @@ import AddIcon from '@material-ui/icons/Add';
 import CloseIcon from '@material-ui/icons/Close';
 // Redux stuff
 import { useDispatch, useSelector } from 'react-redux';
-import { postScream, clearErrors } from '../redux/actions/dataAction';
+import { postScream, clearErrors } from '../../redux/actions/dataAction';
 
 const styles = (theme) => ({
   ...theme.custom,

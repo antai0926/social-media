@@ -1,6 +1,6 @@
 import React, { Fragment, useState } from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
-import MyButton from '../util/MyButton';
+import MyButton from '../../util/MyButton';
 
 // MUI Stuff
 import Button from '@material-ui/core/Button';
@@ -10,7 +10,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DeleteOutline from '@material-ui/icons/DeleteOutline';
 
 //Redux
-import { deleteScream } from '../redux/actions/dataAction';
+import { deleteScream } from '../../redux/actions/dataAction';
 import { useDispatch } from 'react-redux';
 
 const styles = {

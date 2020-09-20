@@ -19,9 +19,9 @@ import AddPhotoAlternateIcon from '@material-ui/icons/AddPhotoAlternate';
 import { useDispatch, useSelector } from 'react-redux';
 
 //Component
-import MyButton from '../util/MyButton';
-import { uploadImage } from '../redux/actions/userAction';
-import EditDetails from '../component/EditDetails';
+import MyButton from '../../util/MyButton';
+import { uploadImage } from '../../redux/actions/userAction';
+import EditDetails from './EditDetails';
 
 const styles = (theme) => ({
   paper: {
