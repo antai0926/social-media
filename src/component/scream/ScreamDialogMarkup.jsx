@@ -1,18 +1,13 @@
 import React from 'react';
 
-import LikeButton from './LikeButton';
 import Comments from './Comments';
 import CommentForm from './CommentForm';
-import dayjs from 'dayjs';
-import { Link } from 'react-router-dom';
-import MyButton from '../../util/MyButton';
+import ScreamContent from './ScreamContent';
 
 // MUI Stuff
 import withStyles from '@material-ui/core/styles/withStyles';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
-import ChatIcon from '@material-ui/icons/Chat';
 
 //Redux
 import { useSelector } from 'react-redux';
@@ -33,18 +28,12 @@ const styles = (theme) => ({
 });
 
 const ScreamDialogMarkup = (props) => {
-  const { classes, screamId } = props;
+  const { classes } = props;
   const data = useSelector((state) => state.data);
   const {
-    body,
-    createdAt,
-    likeCount,
-    commentCount,
-    userImage,
-    userHandle,
-  } = data.scream;
-
-  const { comments } = data;
+    scream: { userImage, screamId },
+    comments,
+  } = data;
 
   const { loading } = useSelector((state) => state.UI);
 
@@ -61,26 +50,7 @@ const ScreamDialogMarkup = (props) => {
         <img src={userImage} alt="Profile" className={classes.profileImage} />
       </Grid>
       <Grid item sm={7}>
-        <Typography
-          component={Link}
-          color="primary"
-          variant="h5"
-          to={`/users/${userHandle}`}
-        >
-          @{userHandle}
-        </Typography>
-        <hr className={classes.invisibleSeparator} />
-        <Typography variant="body2" color="textSecondary">
-          {dayjs(createdAt).format('MMMM DD YYYY, h:mm a')}
-        </Typography>
-        <hr className={classes.invisibleSeparator} />
-        <Typography variant="body1">{body}</Typography>
-        <LikeButton screamId={screamId} />
-        <span>{likeCount} likes</span>
-        <MyButton tip="comments">
-          <ChatIcon color="primary" />
-        </MyButton>
-        <span>{commentCount} comments</span>
+        <ScreamContent scream={data.scream} />
       </Grid>
       <hr className={classes.visibleSeparator} />
       <CommentForm screamId={screamId} />
