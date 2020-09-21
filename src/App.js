@@ -15,6 +15,7 @@ import Home from './pages/Home';
 import Signup from './pages/Signup';
 import Login from './pages/Login';
 import AuthRoute from './util/AuthRoute';
+import User from './pages/User';
 
 //Redux
 import { Provider } from 'react-redux';
@@ -54,6 +55,7 @@ function App() {
               <Route exact path="/" component={Home} />
               <AuthRoute exact path="/login" component={Login} />
               <AuthRoute exact path="/signup" component={Signup} />
+              <Route exact path="/users/:handle" component={User} />
             </Switch>
           </div>
         </BrowserRouter>

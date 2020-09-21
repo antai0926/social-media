@@ -27,6 +27,7 @@ const CommentForm = ({ classes, screamId }) => {
   const handleSubmit = (event) => {
     event.preventDefault();
     dispatch(submitComment(screamId, { body }));
+    setBody('');
   };
 
   return authenticated ? (

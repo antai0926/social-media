@@ -8,6 +8,10 @@ const {
   POST_SCREAM,
   SET_SCREAM,
   SUBMIT_COMMENT,
+  SET_USER_DETAILS,
+  EXPAND_SCREAM,
+  CLOSE_SCREAM,
+  SET_COMMENTS,
 } = TYPES.DATA;
 
 const {
@@ -22,6 +26,8 @@ const INITIAL_STATE = {
   screams: [],
   scream: [],
   loading: false,
+  userDetails: {},
+  comments: [],
 };
 
 const dataReducer = (state = INITIAL_STATE, action) => {
@@ -73,14 +79,23 @@ const dataReducer = (state = INITIAL_STATE, action) => {
         ...state,
         screams: [action.payload, ...state.screams],
       };
+    case SET_COMMENTS:
+      return {
+        ...state,
+        comments: [...action.payload],
+      };
     case SUBMIT_COMMENT:
       return {
         ...state,
-        scream: {
-          ...state.scream,
-          comments: [action.payload, ...state.scream.comments],
-        },
+        comments: [action.payload, ...state.comments],
       };
+    case SET_USER_DETAILS:
+      return {
+        ...state,
+        userDetails: action.payload,
+        loading: false,
+      };
+
     default:
       return state;
   }

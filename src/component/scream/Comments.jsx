@@ -20,6 +20,9 @@ const styles = (theme) => ({
 });
 
 const Comments = ({ classes, comments }) => {
+  if (!comments) {
+    return <p>Loading...</p>;
+  }
   return (
     <Grid container>
       {comments.map((comment, index) => {

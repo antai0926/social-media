@@ -17,6 +17,8 @@ const {
   POST_SCREAM,
   SET_SCREAM,
   SUBMIT_COMMENT,
+  SET_USER_DETAILS,
+  SET_COMMENTS,
 } = TYPES.DATA;
 
 /**Get Screams */
@@ -35,7 +37,9 @@ export const getScream = (screamId) => async (dispatch) => {
   dispatch({ type: LOADING_UI });
   try {
     const res = await axios.get(`/scream/${screamId}`);
-    dispatch({ type: SET_SCREAM, payload: res.data });
+    const scream = res.data;
+    dispatch({ type: SET_SCREAM, payload: scream });
+    dispatch({ type: SET_COMMENTS, payload: scream.comments });
     dispatch({ type: STOP_LOADING_UI });
   } catch (err) {
     console.error(err);
@@ -93,7 +97,24 @@ export const submitComment = (screamId, commentData) => async (dispatch) => {
     dispatch({ type: SUBMIT_COMMENT, payload: res.data });
     dispatch(clearErrors());
   } catch (err) {
-    dispatch({ type: SET_ERRORS, payload: err.response.data });
-    console.error(err.response.data);
+    if (err.response) {
+      dispatch({ type: SET_ERRORS, payload: err.response.data });
+      console.error(err.response.data);
+    }
+    console.error(err);
+  }
+};
+
+/**Get userData */
+export const getUserDetails = (userHandle) => async (dispatch) => {
+  dispatch({ type: LOADING_DATA });
+  try {
+    const res = await axios.get(`/user/${userHandle}`);
+    console.log('res.data', res.data);
+    dispatch({ type: SET_USER_DETAILS, payload: res.data });
+    dispatch({ type: SET_SCREAMS, payload: res.data.screams });
+  } catch (err) {
+    dispatch({ type: SET_USER_DETAILS, payload: null });
+    dispatch({ type: SET_SCREAMS, payload: [] });
   }
 };

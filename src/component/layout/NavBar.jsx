@@ -27,9 +27,11 @@ const NavBar = () => {
     return (
       <React.Fragment>
         <PostScream />
-        <MyButton tip="Home">
-          <HomeIcon color="primary" />
-        </MyButton>
+        <Link to="/">
+          <MyButton tip="Home">
+            <HomeIcon color="primary" />
+          </MyButton>
+        </Link>
         <MyButton tip="Notifications">
           <Notifications color="primary" />
         </MyButton>
