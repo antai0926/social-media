@@ -54,11 +54,11 @@ const PostScream = ({ classes }) => {
   };
 
   useEffect(() => {
-    if (!errors.body && !loading && open) {
+    if (!errors.body && !loading) {
       setBody('');
       handleClose();
     }
-  }, [errors.body, loading, handleClose, open]);
+  }, [errors.body, loading, handleClose]);
 
   return (
     <Fragment>
