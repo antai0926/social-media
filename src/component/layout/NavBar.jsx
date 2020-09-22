@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 //MUI
 import AppBar from '@material-ui/core/AppBar';
-import ToolBar from '@material-ui/core/ToolBar';
+import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
 import HomeIcon from '@material-ui/icons/Home';
 
@@ -59,9 +59,9 @@ const NavBar = () => {
 
   return (
     <AppBar color="primary">
-      <ToolBar className="nav-container">
+      <Toolbar className="nav-container">
         {authenticated ? <AuthenticatedView /> : <UnAuthenticatedView />}
-      </ToolBar>
+      </Toolbar>
     </AppBar>
   );
 };
