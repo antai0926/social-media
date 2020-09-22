@@ -88,7 +88,7 @@ const Signup = (props) => {
             id="handle"
             name="handle"
             type="text"
-            label="handle"
+            label="Your Name"
             className={classes.textField}
             value={handle}
             helperText={errors.handle}
