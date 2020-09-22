@@ -12,8 +12,8 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 //Component
 import NavBar from './component/layout/NavBar.jsx';
 import Home from './pages/home.jsx';
-import Signup from './pages/Signup';
-import Login from './pages/Login';
+import Signup from './pages/signup.jsx';
+import Login from './pages/login.jsx';
 import AuthRoute from './util/AuthRoute';
 import User from './pages/User';
 

@@ -42,5 +42,5 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://localhost:5000/antai-social-media/europe-west1/api"
+  "proxy": "https://europe-west1-antai-social-media.cloudfunctions.net/api"
 }
