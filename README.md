@@ -8,4 +8,4 @@ yarn
 yarn start
 
 ### Build
-yarn buil
+yarn build
