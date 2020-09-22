@@ -28,6 +28,9 @@ import { logoutUser, getUserData } from './redux/actions/userAction';
 
 const theme = createMuiTheme(themeObject);
 
+axios.defaults.baseURL =
+  'https://europe-west1-antai-social-media.cloudfunctions.net/api';
+
 function App() {
   const token = localStorage.FBIdToken;
   if (token) {
