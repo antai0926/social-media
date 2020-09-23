@@ -10,7 +10,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import Grid from '@material-ui/core/Grid';
 
 //Redux
-import { useSelector } from 'react-redux';
+import { connect } from 'react-redux';
 
 const styles = (theme) => ({
   ...theme.custom,
@@ -28,14 +28,13 @@ const styles = (theme) => ({
 });
 
 const ScreamDialogMarkup = (props) => {
-  const { classes } = props;
-  const data = useSelector((state) => state.data);
   const {
     scream: { userImage, screamId },
     comments,
-  } = data;
-
-  const { loading } = useSelector((state) => state.UI);
+    loading,
+    scream,
+    classes,
+  } = props;
 
   if (loading) {
     return (
@@ -50,7 +49,7 @@ const ScreamDialogMarkup = (props) => {
         <img src={userImage} alt="Profile" className={classes.profileImage} />
       </Grid>
       <Grid item sm={7}>
-        <ScreamContent scream={data.scream} />
+        <ScreamContent scream={scream} />
       </Grid>
       <hr className={classes.visibleSeparator} />
       <CommentForm screamId={screamId} />
@@ -59,4 +58,10 @@ const ScreamDialogMarkup = (props) => {
   );
 };
 
-export default withStyles(styles)(ScreamDialogMarkup);
+const mapStateToPorps = (state) => ({
+  scream: state.data.scream,
+  comments: state.data.comments,
+  loading: state.UI.loading,
+});
+
+export default connect(mapStateToPorps)(withStyles(styles)(ScreamDialogMarkup));

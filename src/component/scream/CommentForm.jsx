@@ -6,16 +6,14 @@ import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 // Redux stuff
 import { submitComment } from '../../redux/actions/dataAction';
-import { useDispatch, useSelector } from 'react-redux';
+import { connect } from 'react-redux';
 
 const styles = (theme) => ({
   ...theme.custom,
 });
-const CommentForm = ({ classes, screamId }) => {
-  const UI = useSelector((state) => state.UI);
+const CommentForm = (props) => {
+  const { classes, screamId, UI, authenticated, submitComment } = props;
   const { loading, errors } = UI;
-  const { authenticated } = useSelector((state) => state.user);
-  const dispatch = useDispatch();
   const [body, setBody] = useState('');
 
   useEffect(() => {
@@ -26,7 +24,7 @@ const CommentForm = ({ classes, screamId }) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    dispatch(submitComment(screamId, { body }));
+    submitComment(screamId, { body });
     setBody('');
   };
 
@@ -58,4 +56,16 @@ const CommentForm = ({ classes, screamId }) => {
   ) : null;
 };
 
-export default withStyles(styles)(CommentForm);
+const mapStateToProps = (state) => ({
+  UI: state.UI,
+  authenticated: state.user.authenticated,
+});
+
+const mapActionsToProps = {
+  submitComment,
+};
+
+export default connect(
+  mapStateToProps,
+  mapActionsToProps
+)(withStyles(styles)(CommentForm));

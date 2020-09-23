@@ -7,11 +7,10 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import FavoriteBorder from '@material-ui/icons/FavoriteBorder';
 //Redux
 import { likeScream, unlikeScream } from '../../redux/actions/dataAction';
-import { useSelector, useDispatch } from 'react-redux';
+import { connect } from 'react-redux';
 
-const LikeButton = ({ screamId }) => {
-  const dispatch = useDispatch();
-  const user = useSelector((state) => state.user);
+const LikeButton = (props) => {
+  const { screamId, likeScream, unlikeScream, user } = props;
   const { authenticated } = user;
 
   const likedScream = () => {
@@ -31,19 +30,22 @@ const LikeButton = ({ screamId }) => {
   }
   if (likedScream()) {
     return (
-      <MyButton
-        tip="Undo Like"
-        onClick={() => dispatch(unlikeScream(screamId))}
-      >
+      <MyButton tip="Undo Like" onClick={() => unlikeScream(screamId)}>
         <FavoriteIcon color="primary"></FavoriteIcon>
       </MyButton>
     );
   }
   return (
-    <MyButton tip="Like" onClick={() => dispatch(likeScream(screamId))}>
+    <MyButton tip="Like" onClick={() => likeScream(screamId)}>
       <FavoriteBorder color="primary"></FavoriteBorder>
     </MyButton>
   );
 };
-
-export default LikeButton;
+const mapStateToProps = (state) => ({
+  user: state.user,
+});
+const mapActionsToProps = {
+  likeScream,
+  unlikeScream,
+};
+export default connect(mapStateToProps, mapActionsToProps)(LikeButton);

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { connect } from 'react-redux';
 
 //MUI
 import AppBar from '@material-ui/core/AppBar';
@@ -16,13 +16,12 @@ import MyButton from '../../util/MyButton';
 import { logoutUser } from '../../redux/actions/userAction';
 import PostScream from '../scream/PostScream';
 
-const NavBar = () => {
-  const authenticated = useSelector((state) => state.user.authenticated);
+const NavBar = (props) => {
+  const { authenticated, logoutUser } = props;
 
   const AuthenticatedView = () => {
-    const dispatch = useDispatch();
     const handleLogout = () => {
-      dispatch(logoutUser());
+      logoutUser();
     };
     return (
       <React.Fragment>
@@ -65,5 +64,11 @@ const NavBar = () => {
     </AppBar>
   );
 };
+const mapStateToProps = (state) => ({
+  authenticated: state.user.authenticated,
+});
+const mapActionsToProps = {
+  logoutUser,
+};
 
-export default NavBar;
+export default connect(mapStateToProps, mapActionsToProps)(NavBar);

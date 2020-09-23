@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useCallback, useEffect, useState } from 'react';
 import MyButton from '../../util/MyButton';
 import ScreamDialogMarkup from './ScreamDialogMarkup';
 
@@ -6,16 +6,14 @@ import ScreamDialogMarkup from './ScreamDialogMarkup';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
+import UnfoldMore from '@material-ui/icons/UnfoldMore';
 
 // Icons
 import CloseIcon from '@material-ui/icons/Close';
-import UnfoldMore from '@material-ui/icons/UnfoldMore';
 
 // Redux stuff
+import { connect } from 'react-redux';
 import { getScream, clearErrors } from '../../redux/actions/dataAction';
-import { useDispatch, useSelector } from 'react-redux';
-
-import TYPES from '../../redux/types';
 
 const styles = (theme) => ({
   ...theme.custom,
@@ -33,20 +31,24 @@ const styles = (theme) => ({
 });
 
 const ScreamDialog = (props) => {
-  const dispatch = useDispatch();
-  const expandScream = useSelector((state) => state.UI.expandScream);
+  const { classes, screamId, openDialog, getScream } = props;
+  const [open, setOpen] = useState(false);
 
-  const { classes, screamId } = props;
-
-  const handleOpen = () => {
-    dispatch({ type: TYPES.UI.EXPAND_SCREAM });
-    dispatch(getScream(screamId));
-  };
+  const handleOpen = useCallback(() => {
+    setOpen(true);
+    getScream(screamId);
+  }, [screamId, getScream]);
 
   const handleClose = () => {
-    dispatch({ type: TYPES.UI.CLOSE_SCREAM });
-    dispatch(clearErrors());
+    setOpen(false);
+    props.clearErrors();
   };
+
+  useEffect(() => {
+    if (openDialog) {
+      handleOpen();
+    }
+  }, [handleOpen, openDialog]);
 
   return (
     <Fragment>
@@ -57,7 +59,7 @@ const ScreamDialog = (props) => {
       >
         <UnfoldMore color="primary" />
       </MyButton>
-      <Dialog open={expandScream} onClose={handleClose} fullWidth maxWidth="sm">
+      <Dialog open={open} onClose={handleClose} fullWidth maxWidth="sm">
         <MyButton
           tip="close"
           onClick={handleClose}
@@ -66,11 +68,18 @@ const ScreamDialog = (props) => {
           <CloseIcon />
         </MyButton>
         <DialogContent className={classes.dialogContent}>
-          <ScreamDialogMarkup screamId={screamId} />
+          <ScreamDialogMarkup />
         </DialogContent>
       </Dialog>
     </Fragment>
   );
 };
+const mapActionsToProps = {
+  getScream,
+  clearErrors,
+};
 
-export default withStyles(styles)(ScreamDialog);
+export default connect(
+  null,
+  mapActionsToProps
+)(withStyles(styles)(ScreamDialog));

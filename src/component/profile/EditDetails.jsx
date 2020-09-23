@@ -12,15 +12,14 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 // Icons
 import EditIcon from '@material-ui/icons/Edit';
-import { useDispatch, useSelector } from 'react-redux';
+import { connect } from 'react-redux';
 
 const styles = (theme) => ({
   ...theme.custom,
 });
 
-const EditDetails = ({ classes }) => {
-  const dispatch = useDispatch();
-  const credentials = useSelector((state) => state.user.credentials);
+const EditDetails = (props) => {
+  const { classes, credentials, editUserDetails } = props;
   const [bio, setBio] = useState(credentials.bio ? credentials.bio : '');
   const [website, setWebsite] = useState(
     credentials.website ? credentials.website : ''
@@ -51,7 +50,7 @@ const EditDetails = ({ classes }) => {
       website,
       location,
     };
-    dispatch(editUserDetails(userDetails));
+    editUserDetails(userDetails);
     handleClose();
   };
 
@@ -114,5 +113,12 @@ const EditDetails = ({ classes }) => {
     </Fragment>
   );
 };
+const mapStateToProps = (state) => ({
+  credentials: state.user.credentials,
+});
+const mapActionsToProps = { editUserDetails };
 
-export default withStyles(styles)(EditDetails);
+export default connect(
+  mapStateToProps,
+  mapActionsToProps
+)(withStyles(styles)(EditDetails));

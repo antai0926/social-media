@@ -28,8 +28,11 @@ import { logoutUser, getUserData } from './redux/actions/userAction';
 
 const theme = createMuiTheme(themeObject);
 
+// axios.defaults.baseURL =
+//   'https://europe-west1-antai-social-media.cloudfunctions.net/api';
+
 axios.defaults.baseURL =
-  'https://europe-west1-antai-social-media.cloudfunctions.net/api';
+  'http://localhost:5000/antai-social-media/europe-west1/api';
 
 function App() {
   const token = localStorage.FBIdToken;
@@ -59,6 +62,11 @@ function App() {
               <AuthRoute exact path="/login" component={Login} />
               <AuthRoute exact path="/signup" component={Signup} />
               <Route exact path="/users/:handle" component={User} />
+              <Route
+                exact
+                path="/users/:handle/scream/:screamId"
+                component={User}
+              />
             </Switch>
           </div>
         </BrowserRouter>

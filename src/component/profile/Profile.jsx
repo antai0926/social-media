@@ -16,7 +16,7 @@ import CalendarToday from '@material-ui/icons/CalendarToday';
 import AddPhotoAlternateIcon from '@material-ui/icons/AddPhotoAlternate';
 
 //Redux
-import { useDispatch, useSelector } from 'react-redux';
+import { connect } from 'react-redux';
 
 //Component
 import MyButton from '../../util/MyButton';
@@ -72,13 +72,12 @@ const styles = (theme) => ({
 });
 
 const Profile = (props) => {
-  const dispatch = useDispatch();
+  const { user, classes, uploadImage } = props;
   const {
     credentials: { handle, createdAt, imageUrl, bio, website, location },
     loading,
     authenticated,
-  } = useSelector((state) => state.user);
-  const { classes } = props;
+  } = user;
 
   const imgInputRef = useRef(null);
 
@@ -86,7 +85,7 @@ const Profile = (props) => {
     const image = event.target.files[0];
     const formData = new FormData();
     formData.append('image', image, image.name);
-    dispatch(uploadImage(formData));
+    uploadImage(formData);
   };
 
   const handleEditPicture = (event) => {
@@ -197,4 +196,15 @@ const Profile = (props) => {
   return profileMarkup;
 };
 
-export default withStyles(styles)(Profile);
+const mapStateToPorps = (state) => ({
+  user: state.user,
+});
+
+const mapActionsToProps = {
+  uploadImage,
+};
+
+export default connect(
+  mapStateToPorps,
+  mapActionsToProps
+)(withStyles(styles)(Profile));

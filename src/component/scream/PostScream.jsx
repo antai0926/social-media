@@ -11,7 +11,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import AddIcon from '@material-ui/icons/Add';
 import CloseIcon from '@material-ui/icons/Close';
 // Redux stuff
-import { useDispatch, useSelector } from 'react-redux';
+import { connect } from 'react-redux';
 import { postScream, clearErrors } from '../../redux/actions/dataAction';
 
 const styles = (theme) => ({
@@ -31,13 +31,10 @@ const styles = (theme) => ({
   },
 });
 
-const PostScream = ({ classes }) => {
-  const UI = useSelector((state) => state.UI);
+const PostScream = ({ classes, UI, clearErrors, postScream }) => {
   const { loading, errors } = UI;
   const [open, setOpen] = useState(false);
   const [body, setBody] = useState('');
-
-  const dispatch = useDispatch();
 
   const handleOpen = () => {
     setOpen(true);
@@ -45,12 +42,12 @@ const PostScream = ({ classes }) => {
 
   const handleClose = useCallback(() => {
     setOpen(false);
-    dispatch(clearErrors());
-  }, [dispatch]);
+    clearErrors();
+  }, [clearErrors]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    dispatch(postScream({ body }));
+    postScream({ body });
   };
 
   useEffect(() => {
@@ -111,4 +108,15 @@ const PostScream = ({ classes }) => {
   );
 };
 
-export default withStyles(styles)(PostScream);
+const mapStateToProps = (state) => ({
+  UI: state.UI,
+});
+const mapActionsToProps = {
+  postScream,
+  clearErrors,
+};
+
+export default connect(
+  mapStateToProps,
+  mapActionsToProps
+)(withStyles(styles)(PostScream));

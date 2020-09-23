@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 import AppIcon from '../images/icon.png';
 
 //Redux
-import { useSelector, useDispatch } from 'react-redux';
+import { connect } from 'react-redux';
 import { loginUser } from '../redux/actions/userAction';
 
 //MUI
@@ -27,16 +27,15 @@ const Login = (props) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const dispatch = useDispatch();
-  const { loading, errors } = useSelector((state) => state.UI);
+  const { classes, UI, history, loginUser } = props;
+  const { loading, errors } = UI;
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     const userData = { email, password };
-    dispatch(loginUser(userData, props.history));
+    loginUser(userData, history);
   };
 
-  const { classes } = props;
   return (
     <Grid container className={classes.form}>
       <Grid item sm />
@@ -105,4 +104,14 @@ Login.propTypes = {
   classes: Prototypes.object.isRequired,
 };
 
-export default withStyles(styles)(Login);
+const mapStateToProps = (state) => ({
+  UI: state.UI,
+});
+const mapActionsToProps = {
+  loginUser,
+};
+
+export default connect(
+  mapStateToProps,
+  mapActionsToProps
+)(withStyles(styles)(Login));

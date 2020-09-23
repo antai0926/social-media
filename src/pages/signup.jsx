@@ -16,7 +16,7 @@ import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 //Redux
-import { useSelector, useDispatch } from 'react-redux';
+import { connect } from 'react-redux';
 import { signupUser } from '../redux/actions/userAction';
 
 const styles = (theme) => ({
@@ -29,13 +29,13 @@ const Signup = (props) => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [handle, setHandle] = useState('');
 
-  const { loading, errors } = useSelector((state) => state.UI);
-  const dispatch = useDispatch();
+  const { UI, signupUser } = props;
+  const { loading, errors } = UI;
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     const newUserData = { email, password, confirmPassword, handle };
-    dispatch(signupUser(newUserData, props.history));
+    signupUser(newUserData, props.history);
   };
 
   const { classes } = props;
@@ -131,4 +131,14 @@ Signup.propTypes = {
   classes: Prototypes.object.isRequired,
 };
 
-export default withStyles(styles)(Signup);
+const mapStateToProps = (state) => ({
+  UI: state.UI,
+});
+const mapActionsToProps = {
+  signupUser,
+};
+
+export default connect(
+  mapStateToProps,
+  mapActionsToProps
+)(withStyles(styles)(Signup));

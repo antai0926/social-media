@@ -16,8 +16,7 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 
 //Redux
-
-import { useSelector } from 'react-redux';
+import { connect } from 'react-redux';
 
 const styles = {
   card: {
@@ -38,9 +37,9 @@ const Scream = (props) => {
   const {
     classes,
     scream: { userImage, userHandle, screamId },
+    openDialog,
+    user,
   } = props;
-
-  const user = useSelector((state) => state.user);
 
   const {
     authenticated,
@@ -64,10 +63,18 @@ const Scream = (props) => {
       />
       <CardContent className={classes.content}>
         <ScreamContent DeleteButton={DeleteButton} scream={props.scream} />
-        <ScreamDialog screamId={screamId} userHandle={userHandle} />
+        <ScreamDialog
+          screamId={screamId}
+          userHandle={userHandle}
+          openDialog={openDialog}
+        />
       </CardContent>
     </Card>
   );
 };
 
-export default withStyles(styles)(Scream);
+const mapStateToProps = (state) => ({
+  user: state.user,
+});
+
+export default connect(mapStateToProps)(withStyles(styles)(Scream));

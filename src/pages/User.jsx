@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 //Component
 import Scream from '../component/scream/Scream';
 import StaticProfile from '../component/profile/StaticProfile';
@@ -8,37 +8,42 @@ import StaticProfile from '../component/profile/StaticProfile';
 import Grid from '@material-ui/core/Grid';
 
 //Redux
-import { useSelector, useDispatch } from 'react-redux';
+import { connect } from 'react-redux';
 import { getUserDetails } from '../redux/actions/dataAction';
 
 const User = (props) => {
-  const dispatch = useDispatch();
-  const data = useSelector((state) => state.data);
-  const { loading } = data;
+  const [screamIdParam, setScreamIdParam] = useState(null);
+  const { data, getUserDetails } = props;
+  const { loading, screams } = data;
   const profile = data.userDetails.user;
-  const screams = data.screams;
+
   useEffect(() => {
     const handle = props.match.params.handle;
-    console.log('handle', handle);
-    dispatch(getUserDetails(handle));
-  }, [props.match.params.handle, dispatch]);
+    const screamId = props.match.params.screamId;
+    if (screamId) {
+      setScreamIdParam(screamId);
+    }
+    getUserDetails(handle);
+  }, [props.match.params.handle, props.match.params.screamId, getUserDetails]);
 
-  const ScreamsMarkup = () => {
-    if (loading) {
-      return <p>Loading...</p>;
-    }
-    if (!screams || screams.length === 0) {
-      return <p>No screams from this user</p>;
-    }
-    return screams.map((scream) => (
-      <Scream key={scream.screamId} scream={scream} />
-    ));
-  };
+  const screamsMarkup = loading ? (
+    <p>Loading...</p>
+  ) : screams === null ? (
+    <p>No screams from this user</p>
+  ) : !screamIdParam ? (
+    screams.map((scream) => <Scream key={scream.screamId} scream={scream} />)
+  ) : (
+    screams.map((scream) => {
+      if (scream.screamId !== screamIdParam)
+        return <Scream key={scream.screamId} scream={scream} />;
+      else return <Scream key={scream.screamId} scream={scream} openDialog />;
+    })
+  );
 
   return (
     <Grid container spacing={1}>
       <Grid item sm={8} xs={12}>
-        <ScreamsMarkup />
+        {screamsMarkup}
       </Grid>
       <Grid item sm={4} xs={12}>
         {!profile || loading ? (
@@ -51,4 +56,11 @@ const User = (props) => {
   );
 };
 
-export default User;
+const mapStateToProps = (state) => ({
+  data: state.data,
+});
+const mapActionsToProps = {
+  getUserDetails,
+};
+
+export default connect(mapStateToProps, mapActionsToProps)(User);
