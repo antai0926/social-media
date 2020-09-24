@@ -31,15 +31,22 @@ const styles = (theme) => ({
 });
 
 const ScreamDialog = (props) => {
-  const { classes, screamId, openDialog, getScream } = props;
+  const { classes, screamId, openDialog, getScream, userHandle } = props;
   const [open, setOpen] = useState(false);
+  const [oldPath, setOldPath] = useState('');
 
   const handleOpen = useCallback(() => {
+    let oldPath = window.location.pathname;
+    const newPath = `/users/${userHandle}/scream/${screamId}`;
+    if (oldPath === newPath) oldPath = `/users/${userHandle}`;
+    window.history.pushState(null, null, newPath);
+    setOldPath(oldPath);
     setOpen(true);
     getScream(screamId);
-  }, [screamId, getScream]);
+  }, [screamId, getScream, userHandle]);
 
   const handleClose = () => {
+    window.history.pushState(null, null, oldPath);
     setOpen(false);
     props.clearErrors();
   };
