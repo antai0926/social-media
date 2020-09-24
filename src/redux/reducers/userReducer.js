@@ -5,6 +5,7 @@ const {
   SET_AUTHENTICATED,
   SET_UNAUTHENTICATED,
   LOADING_USER,
+  MARK_NOTIFICATIONS_READ,
 } = TYPES.USER;
 
 const { LIKE_SCREAM, UNLIKE_SCREAM } = TYPES.DATA;
@@ -54,6 +55,11 @@ const userReducer = (state = INITIAL_STATE, action) => {
         likes: state.likes.filter((like) => {
           return like.screamId !== action.payload.screamId;
         }),
+      };
+    case MARK_NOTIFICATIONS_READ:
+      state.notifications.forEach((not) => (not.read = true));
+      return {
+        ...state,
       };
     default:
       return state;

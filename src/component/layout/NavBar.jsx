@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import Notifications from './Notifications';
 
 //MUI
 import AppBar from '@material-ui/core/AppBar';
@@ -8,7 +9,6 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
 import HomeIcon from '@material-ui/icons/Home';
 
-import Notifications from '@material-ui/icons/Notifications';
 import MeetingRoomIcon from '@material-ui/icons/MeetingRoom';
 
 //component
@@ -31,9 +31,7 @@ const NavBar = (props) => {
             <HomeIcon color="primary" />
           </MyButton>
         </Link>
-        <MyButton tip="Notifications">
-          <Notifications color="primary" />
-        </MyButton>
+        <Notifications />
         <MyButton tip="Logout" onClick={handleLogout}>
           <MeetingRoomIcon color="primary" />
         </MyButton>

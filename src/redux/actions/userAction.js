@@ -2,7 +2,12 @@ import axios from 'axios';
 
 import TYPES from '../types';
 
-const { SET_USER, SET_UNAUTHENTICATED, LOADING_USER } = TYPES.USER;
+const {
+  SET_USER,
+  SET_UNAUTHENTICATED,
+  LOADING_USER,
+  MARK_NOTIFICATIONS_READ,
+} = TYPES.USER;
 const { LOADING_UI, CLEAR_ERRORS, SET_ERRORS } = TYPES.UI;
 
 const setAuthorizationHeader = (token) => {
@@ -71,6 +76,15 @@ export const editUserDetails = (userDetials) => async (dispatch) => {
   try {
     await axios.post('/user', userDetials);
     dispatch(getUserData());
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+export const markNotificationsRead = (notificationIds) => async (dispatch) => {
+  try {
+    await axios.post('/notifications', notificationIds);
+    dispatch({ type: MARK_NOTIFICATIONS_READ });
   } catch (err) {
     console.error(err);
   }
