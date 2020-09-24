@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 //Component
 import Scream from '../component/scream/Scream';
 import StaticProfile from '../component/profile/StaticProfile';
-// import ScreamSkeleton from '../util/ScreamSkeleton';
-// import ProfileSkeleton from '../util/ProfileSkeleton';
+import ScreamSkeleton from '../util/ScreamSkeleton';
+import ProfileSkeleton from '../util/ProfileSkeleton';
 //MUI
 import Grid from '@material-ui/core/Grid';
 
@@ -27,7 +27,7 @@ const User = (props) => {
   }, [props.match.params.handle, props.match.params.screamId, getUserDetails]);
 
   const screamsMarkup = loading ? (
-    <p>Loading...</p>
+    <ScreamSkeleton />
   ) : screams === null ? (
     <p>No screams from this user</p>
   ) : !screamIdParam ? (
@@ -47,7 +47,7 @@ const User = (props) => {
       </Grid>
       <Grid item sm={4} xs={12}>
         {!profile || loading ? (
-          <p>Loading...</p>
+          <ProfileSkeleton />
         ) : (
           <StaticProfile profile={profile} />
         )}
