@@ -22,6 +22,7 @@ import { connect } from 'react-redux';
 import MyButton from '../../util/MyButton';
 import { uploadImage } from '../../redux/actions/userAction';
 import EditDetails from './EditDetails';
+import ProfileSkeleton from '../../util/ProfileSkeleton';
 
 const styles = (theme) => ({
   paper: {
@@ -190,7 +191,7 @@ const Profile = (props) => {
       <UnAutenticatedView />
     )
   ) : (
-    <p>Loading...</p>
+    <ProfileSkeleton />
   );
 
   return profileMarkup;
